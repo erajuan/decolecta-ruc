@@ -1,4 +1,4 @@
-FROM golang:1.25-rc-bookworm as builder
+FROM golang:1.24-bookworm as builder
 
 # Move to working directory /build
 WORKDIR /home
@@ -29,7 +29,7 @@ VOLUME /data
 USER appuser
 
 # Add provenance metadata label (minimal step)
-LABEL org.opencontainers.image.source="https://github.com/erajuan/decolecta-ruc"
+LABEL org.opencontainers.image.source="https://github.com/erajuan/decolecta-auth"
 LABEL org.opencontainers.image.created=$BUILD_DATE
 
 CMD ["./app"]
