@@ -1,0 +1,8 @@
+package main
+
+const (
+	SUNAT                    = 100
+	SUNAT_BUEN_CONTRIBUYENTE = 10001
+	SUNAT_AGENTE_RETENCION   = 10002
+	SUNAT_LOCAL_ANEXO        = 10003
+)
