@@ -24,6 +24,8 @@ RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
 COPY --from=builder /home/app .
 
+COPY ubigeos.json .
+
 VOLUME /data
 RUN chown -R appuser:appgroup ubigeos.json && chmod 644 ubigeos.json
 
