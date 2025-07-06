@@ -1,7 +1,7 @@
 FROM golang:1.24-bookworm as builder
 
 # Move to working directory /build
-WORKDIR /home
+WORKDIR /builder
 
 # Copy and download dependency using go mod
 COPY go.mod .
@@ -16,18 +16,15 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
 
 # copy to small linux
 FROM alpine:3.22
-RUN apk --no-cache add ca-certificates
-WORKDIR /root/
-RUN apk --no-cache add tzdata
-
+RUN apk --no-cache add ca-certificates tzdata
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
-COPY --from=builder /home/app .
+WORKDIR /app/
 
+COPY --from=builder /builder/app .
 COPY ubigeos.json .
 
-VOLUME /data
-RUN chown -R appuser:appgroup ubigeos.json && chmod 644 ubigeos.json
+RUN chown -R appuser:appgroup /app && chmod 644 ubigeos.json
 
 USER appuser
 
