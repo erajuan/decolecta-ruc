@@ -1,4 +1,4 @@
-create table sunat_ruc_extras(
+create table if not exists sunat_ruc_extras(
 	ruc character varying(11) not null,
 	type_id integer not null,
 	position integer not null,

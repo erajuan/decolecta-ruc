@@ -23,13 +23,14 @@ WORKDIR /app/
 
 COPY --from=builder /builder/app .
 COPY ubigeos.json .
+COPY scripts .
 
 RUN chown -R appuser:appgroup /app && chmod 644 ubigeos.json
 
 USER appuser
 
 # Add provenance metadata label (minimal step)
-LABEL org.opencontainers.image.source="https://github.com/erajuan/decolecta-auth"
+LABEL org.opencontainers.image.source="https://github.com/erajuan/decolecta-ruc"
 LABEL org.opencontainers.image.created=$BUILD_DATE
 
 CMD ["./app"]

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"log"
 	"time"
 )
 
@@ -24,9 +25,10 @@ func GetCompanyRepository(ruc string) (CompanyDTO, error) {
 	SELECT type_id, content
 	FROM sunat_ruc_extras
 	WHERE ruc=$1
-	LIMIT 10;`, ruc)
+	LIMIT 30;`, ruc)
 
 	if err1 != nil {
+		log.Printf("Error querying sunat_ruc_extras: %v", err1)
 		return c, nil
 	}
 	var typeId int
