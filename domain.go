@@ -22,16 +22,16 @@ var DEPARTAMENTOS = map[string]Departamento{}
 
 // Company
 type Company struct {
-	RazonSocial         string           `json:"razonSocial"`
-	NumeroDocumento     string           `json:"numeroDocumento"`
+	RazonSocial         string           `json:"razon_social"`
+	NumeroDocumento     string           `json:"numero_documento"`
 	Estado              string           `json:"estado"`
 	Condicion           string           `json:"condicion"`
 	Direccion           string           `json:"direccion"`
 	Ubigeo              string           `json:"ubigeo"`
-	ViaTipo             string           `json:"viaTipo"`
-	ViaNombre           string           `json:"viaNombre"`
-	ZonaCodigo          string           `json:"zonaCodigo"`
-	ZonaTipo            string           `json:"zonaTipo"`
+	ViaTipo             string           `json:"via_tipo"`
+	ViaNombre           string           `json:"via_nombre"`
+	ZonaCodigo          string           `json:"zona_codigo"`
+	ZonaTipo            string           `json:"zona_tipo"`
 	Numero              string           `json:"numero"`
 	Interior            string           `json:"interior"`
 	Lote                string           `json:"lote"`
@@ -41,20 +41,20 @@ type Company struct {
 	Distrito            string           `json:"distrito"`
 	Provincia           string           `json:"provincia"`
 	Departamento        string           `json:"departamento"`
-	EsAgenteRetencion   bool             `json:"EsAgenteRetencion"`
-	EsBuenContribuyente bool             `json:"EsBuenContribuyente"`
-	LocalesAnexos       []CompanyAddress `json:"localesAnexos"`
+	EsAgenteRetencion   bool             `json:"es_agente_retencion"`
+	EsBuenContribuyente bool             `json:"es_buen_contribuyente"`
+	LocalesAnexos       []CompanyAddress `json:"locales_anexos"`
 }
 
 // CompanyAdvance
 type CompanyAdvance struct {
 	Company
 	Tipo               string `json:"tipo"`
-	ActividadEconomica string `json:"actividadEconomica"`
-	NumeroTrabajadores string `json:"numeroTrabajadores"`
-	TipoFacturacion    string `json:"tipoFacturacion"`
-	TipoContabilidad   string `json:"tipoContabilidad"`
-	ComercioExterior   string `json:"comercioExterior"`
+	ActividadEconomica string `json:"actividad_economica"`
+	NumeroTrabajadores string `json:"numero_trabajadores"`
+	TipoFacturacion    string `json:"tipo_facturacion"`
+	TipoContabilidad   string `json:"tipo_contabilidad"`
+	ComercioExterior   string `json:"comercio_exterior"`
 }
 
 type CompanyDTO struct {
@@ -81,7 +81,7 @@ type SunatExtrasDTO struct {
 
 type CompanyWithholdingAgent struct {
 	Ruc               string `json:"ruc"`
-	EsAgenteRetencion bool   `json:"EsAgenteRetencion"`
+	EsAgenteRetencion bool   `json:"es_agente_retencion"`
 	StartAt           string `json:"desde"`
 	Resolution        string `json:"resolucion"`
 }
