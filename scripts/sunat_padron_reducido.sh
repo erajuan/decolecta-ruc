@@ -28,7 +28,8 @@ iconv -f iso-8859-1 -t utf-8 /tmp/padron_reducido_ruc.csv -o /tmp/padron_reducid
 echo -e "\nCopiar padron_reducido_ruc_utf8.csv a db:/tmp ...\n"
 # copiar rucs a /tmp docker
 sudo docker cp /tmp/padron_reducido_ruc_utf8.csv "$DB_CONTAINER":/tmp
-# sudo docker cp /home/robot/deco/decolecta-ruc/scripts/sunat_padron_reducido_clear_table.sh "$DB_CONTAINER":/tmp/
+echo -e "\nCopy sunat_padron_reducido_sql"
+sudo docker cp ~/cronjobs/sunat_padron_reducido_sql.sh "$DB_CONTAINER":/tmp/
 # exec copy
 echo -e "\nexec sunat_padron_reducido_sql in docker ..."
-sudo docker exec -i "$DB_CONTAINER" /bin/bash  /usr/local/bin/sunat_padron_reducido_clear_table.sh
+sudo docker exec -i "$DB_CONTAINER" /bin/bash /tmp/sunat_padron_reducido_sql.sh
