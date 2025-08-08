@@ -41,9 +41,8 @@ func main() {
 	app.Get("/ruc/full", GetCompanyAdvanceHandler)
 	app.Get("/ruc/:numero", Pro5RucHandler)
 	if err := app.Listen(":3000"); err != nil {
-		panic(err)
+		log.Fatalf("Failed to start server: %v", err)
 	}
-	log.Fatal(app.Listen(":3000"))
 }
 
 func Init() {
