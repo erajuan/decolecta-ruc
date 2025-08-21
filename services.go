@@ -22,7 +22,7 @@ func GetCompanyService(ruc string) (Company, error) {
 
 	data, err1 := GetCompanyRepository(ruc)
 	if err1 != nil {
-		return Company{}, err
+		return Company{}, err1
 	}
 	c.Extender(data.Data)
 	c.EsAgenteRetencion = data.EsAgenteRetencion

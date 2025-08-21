@@ -24,7 +24,11 @@ awk -F '|' 'FNR > 1 {
   ($5=="-" ? "": ";;" $5 ";;" $6 ";;" $7 ";;" $8 ";;" $9 ";;" $10 ";;" $11 ";;" $12 ";;" $13 ";;" $14 ";;" $15)\
   }' /tmp/padron_reducido_ruc.txt > /tmp/padron_reducido_ruc.csv
 echo -e "\nCambiar encode a utf-8 ..."
-iconv -f iso-8859-1 -t utf-8 /tmp/padron_reducido_ruc.csv -o /tmp/padron_reducido_ruc_utf8.csv
+iconv -f iso-8859-1 -t utf-8//TRANSLIT /tmp/padron_reducido_ruc.csv -o /tmp/padron_reducido_ruc_utf8_dry.csv
+# remove ;
+tr -d ';' < /tmp/padron_reducido_ruc_utf8_dry.csv > /tmp/padron_reducido_ruc_utf8.csv
+echo -e "\nremove"
+rm /tmp/padron_reducido_ruc.csv /tmp/padron_reducido_ruc_utf8_dry.txt
 echo -e "\nCopiar padron_reducido_ruc_utf8.csv a db:/tmp ...\n"
 # copiar rucs a /tmp docker
 sudo docker cp /tmp/padron_reducido_ruc_utf8.csv "$DB_CONTAINER":/tmp

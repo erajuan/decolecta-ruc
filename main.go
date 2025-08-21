@@ -21,10 +21,6 @@ var redisClient *redis.Client
 
 var pgsqlClient *pgxpool.Pool
 
-type counter struct{ r *redis.Client }
-
-type repo struct{ db *pgxpool.Pool }
-
 func main() {
 	Init()
 	app := fiber.New(fiber.Config{
