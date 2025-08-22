@@ -1,5 +1,5 @@
 #!/bin/bash
-DB_CONTAINER=setup-postgres-1
+DB_CONTAINER=api-postgres-1
 if [ -f /tmp/padron_reducido_ruc.zip ]; then
     rm /tmp/padron_reducido_ruc.zip
 fi
@@ -15,22 +15,19 @@ wget -O /tmp/padron_reducido_ruc.zip http://www2.sunat.gob.pe/padron_reducido_ru
 echo -e "\nUnzip padron_reducido_ruc.zip ..."
 unzip /tmp/padron_reducido_ruc.zip -d /tmp/
 echo -e "\nFormatear txt ..."
-# formatear
+# formatear and clear
+tr -d '<>\\' < /tmp/padron_reducido_ruc.txt > /tmp/remove_padron_reducido_ruc.txt
 awk -F '|' 'FNR > 1 {
   gsub(/\"/,"",$2); \
-  print $1 "|" $2";;"\
-  ($3=="ACTIVO" ? "1":$3)";;" \
+  print $1 "|" $2">"\
+  ($3=="ACTIVO" ? "1":$3)">" \
   ($4=="HABIDO" ? "1":($4=="NO HABIDO" ? "0":$4))\
-  ($5=="-" ? "": ";;" $5 ";;" $6 ";;" $7 ";;" $8 ";;" $9 ";;" $10 ";;" $11 ";;" $12 ";;" $13 ";;" $14 ";;" $15)\
-  }' /tmp/padron_reducido_ruc.txt > /tmp/padron_reducido_ruc.csv
+  ($5=="-" ? "": ">" $5 ">" $6 ">" $7 ">" $8 ">" $9 ">" $10 ">" $11 ">" $12 ">" $13 ">" $14 ">" $15)\
+  }' /tmp/remove_padron_reducido_ruc.txt > /tmp/remove_padron_reducido_ruc.csv
 echo -e "\nCambiar encode a utf-8 ..."
-iconv -f iso-8859-1 -t utf-8//TRANSLIT /tmp/padron_reducido_ruc.csv -o /tmp/padron_reducido_ruc_utf8_dry.csv
+iconv -f iso-8859-1 -t utf-8//TRANSLIT /tmp/remove_padron_reducido_ruc.csv -o /tmp/padron_reducido_ruc_utf8.csv
 # remove ;
-tr -d ';' < /tmp/padron_reducido_ruc_utf8_dry.csv > /tmp/padron_reducido_ruc_utf8.csv
-echo -e "\nremove"
-rm /tmp/padron_reducido_ruc.csv /tmp/padron_reducido_ruc_utf8_dry.txt
 echo -e "\nCopiar padron_reducido_ruc_utf8.csv a db:/tmp ...\n"
-# copiar rucs a /tmp docker
 sudo docker cp /tmp/padron_reducido_ruc_utf8.csv "$DB_CONTAINER":/tmp
 echo -e "\nCopy sunat_padron_reducido_sql"
 sudo docker cp ~/cronjobs/sunat_padron_reducido_sql.sh "$DB_CONTAINER":/tmp/

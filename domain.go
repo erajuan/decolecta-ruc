@@ -87,7 +87,8 @@ type CompanyWithholdingAgent struct {
 }
 
 func (c *Company) Extender(cached string) {
-	data := strings.Split(cached, ";;")
+	var DATA_SEPARATOR = ">"
+	data := strings.Split(cached, DATA_SEPARATOR)
 	c.RazonSocial = data[0]
 
 	switch data[1] {
