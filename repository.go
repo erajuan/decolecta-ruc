@@ -17,7 +17,7 @@ func GetCompanyRepository(ruc string) (CompanyDTO, error) {
 		WHERE ruc=$1
 		LIMIT 1;`, ruc).Scan(&c.Data)
 	if err != nil {
-		fmt.Println("Error:", err)
+		fmt.Printf("Error: %v, RUC: %s\n", err, ruc)
 		return CompanyDTO{}, err
 	}
 
@@ -25,10 +25,10 @@ func GetCompanyRepository(ruc string) (CompanyDTO, error) {
 	SELECT type_id, content
 	FROM sunat_ruc_extras
 	WHERE ruc=$1
-	LIMIT 30;`, ruc)
+	LIMIT 40;`, ruc)
 
 	if err1 != nil {
-		log.Printf("Error querying sunat_ruc_extras: %v", err1)
+		log.Printf("Error querying sunat_ruc_extras: %v, RUC: %s\n", err1, ruc)
 		return c, nil
 	}
 	var typeId int

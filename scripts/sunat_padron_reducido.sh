@@ -1,5 +1,5 @@
 #!/bin/bash
-DB_CONTAINER=api-postgres-1
+DB_CONTAINER=apu-postgres-1
 if [ -f /tmp/padron_reducido_ruc.zip ]; then
     rm /tmp/padron_reducido_ruc.zip
 fi
