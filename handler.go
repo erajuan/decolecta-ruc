@@ -19,9 +19,9 @@ func GetCompanyHandler(c *fiber.Ctx) error {
 	if ruc == "" {
 		ruc1, err1 := CreateRUCFromDNI(dni)
 		if err1 != nil {
-			ruc = ruc1
-		} else {
 			return c.Status(422).JSON(fiber.Map{"message": "DNI no valido"})
+		} else {
+			ruc = ruc1
 		}
 	}
 	if err := IsValidRuc(ruc); err != nil {
