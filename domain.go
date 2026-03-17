@@ -242,6 +242,7 @@ func GetLocalAnexoAddress(data string) CompanyAddress {
 	return companyAddress
 }
 func getUbigeo(ubigeo string) (string, string, string) {
+	ubigeo = LeftPadZero(ubigeo, 6)
 	dep := DEPARTAMENTOS[ubigeo[0:2]]
 	prov := dep.Provincias[ubigeo[2:4]]
 	return dep.Nombre, prov.Nombre, prov.Distritos[ubigeo[4:6]]

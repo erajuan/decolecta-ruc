@@ -15,6 +15,15 @@ func Home(c *fiber.Ctx) error {
 
 func GetCompanyHandler(c *fiber.Ctx) error {
 	var ruc string = c.Query("numero")
+	var dni string = c.Query("dni")
+	if ruc == "" {
+		ruc1, err1 := CreateRUCFromDNI(dni)
+		if err1 != nil {
+			ruc = ruc1
+		} else {
+			return c.Status(422).JSON(fiber.Map{"message": "DNI no valido"})
+		}
+	}
 	if err := IsValidRuc(ruc); err != nil {
 		return c.Status(422).JSON(fiber.Map{"message": "ruc no valido"})
 	}
