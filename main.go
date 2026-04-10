@@ -36,6 +36,9 @@ func main() {
 	app.Get("/ruc", GetCompanyHandler)
 	app.Get("/ruc/full", GetCompanyAdvanceHandler)
 	app.Get("/ruc/:numero", Pro5RucHandler)
+	// Compatible with apis
+	app.Get("/apisV1/ruc", GetCompanyApisV1Handler)
+	app.Get("/apisV2/ruc", GetCompanyApisV2Handler)
 	if err := app.Listen(":3000"); err != nil {
 		log.Fatalf("Failed to start server: %v", err)
 	}

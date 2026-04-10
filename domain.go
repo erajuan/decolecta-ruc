@@ -20,6 +20,65 @@ type Departamento struct {
 // DEPARTAMENTOS del peru
 var DEPARTAMENTOS = map[string]Departamento{}
 
+type CompanyApisV1 struct {
+	Nombre          string `json:"nombre"`
+	TipoDocumento   string `json:"tipoDocumento"`
+	NumeroDocumento string `json:"numeroDocumento"`
+	Estado          string `json:"estado"`
+	Condicion       string `json:"condicion"`
+	Direccion       string `json:"direccion"`
+	Ubigeo          string `json:"ubigeo"`
+	ViaTipo         string `json:"viaTipo"`
+	ViaNombre       string `json:"viaNombre"`
+	ZonaCodigo      string `json:"zonaCodigo"`
+	ZonaTipo        string `json:"zonaTipo"`
+	Numero          string `json:"numero"`
+	Interior        string `json:"interior"`
+	Lote            string `json:"lote"`
+	Dpto            string `json:"dpto"`
+	Manzana         string `json:"manzana"`
+	Kilometro       string `json:"kilometro"`
+	Distrito        string `json:"distrito"`
+	Provincia       string `json:"provincia"`
+	Departamento    string `json:"departamento"`
+}
+
+type CompanyApisV2 struct {
+	RazonSocial         string           `json:"razonSocial"`
+	TipoDocumento       string           `json:"tipoDocumento"`
+	NumeroDocumento     string           `json:"numeroDocumento"`
+	Estado              string           `json:"estado"`
+	Condicion           string           `json:"condicion"`
+	Direccion           string           `json:"direccion"`
+	Ubigeo              string           `json:"ubigeo"`
+	ViaTipo             string           `json:"viaTipo"`
+	ViaNombre           string           `json:"viaNombre"`
+	ZonaCodigo          string           `json:"zonaCodigo"`
+	ZonaTipo            string           `json:"zonaTipo"`
+	Numero              string           `json:"numero"`
+	Interior            string           `json:"interior"`
+	Lote                string           `json:"lote"`
+	Dpto                string           `json:"dpto"`
+	Manzana             string           `json:"manzana"`
+	Kilometro           string           `json:"kilometro"`
+	Distrito            string           `json:"distrito"`
+	Provincia           string           `json:"provincia"`
+	Departamento        string           `json:"departamento"`
+	EsAgenteRetencion   bool             `json:"EsAgenteRetencion"`
+	EsBuenContribuyente bool             `json:"EsBuenContribuyente"`
+	LocalesAnexos       []CompanyAddress `json:"localesAnexos"`
+}
+
+type CompanyAdvanceApisV2 struct {
+	CompanyApisV2
+	Tipo               string `json:"tipo"`
+	ActividadEconomica string `json:"actividadEconomica"`
+	NumeroTrabajadores string `json:"numeroTrabajadores"`
+	TipoFacturacion    string `json:"tipoFacturacion"`
+	TipoContabilidad   string `json:"tipoContabilidad"`
+	ComercioExterior   string `json:"comercioExterior"`
+}
+
 // Company
 type Company struct {
 	RazonSocial         string           `json:"razon_social"`
@@ -44,6 +103,59 @@ type Company struct {
 	EsAgenteRetencion   bool             `json:"es_agente_retencion"`
 	EsBuenContribuyente bool             `json:"es_buen_contribuyente"`
 	LocalesAnexos       []CompanyAddress `json:"locales_anexos"`
+}
+
+func (c Company) ToApisV1() CompanyApisV1 {
+	return CompanyApisV1{
+		Nombre:          c.RazonSocial,
+		TipoDocumento:   "6",
+		NumeroDocumento: c.NumeroDocumento,
+		Estado:          c.Estado,
+		Condicion:       c.Condicion,
+		Direccion:       c.Direccion,
+		Ubigeo:          c.Ubigeo,
+		ViaTipo:         c.ViaTipo,
+		ViaNombre:       c.ViaNombre,
+		ZonaCodigo:      c.ZonaCodigo,
+		ZonaTipo:        c.ZonaTipo,
+		Numero:          c.Numero,
+		Interior:        c.Interior,
+		Lote:            c.Lote,
+		Dpto:            c.Dpto,
+		Manzana:         c.Manzana,
+		Kilometro:       c.Kilometro,
+		Distrito:        c.Distrito,
+		Provincia:       c.Provincia,
+		Departamento:    c.Departamento,
+	}
+}
+
+func (c Company) ToApisV2() CompanyApisV2 {
+	return CompanyApisV2{
+		RazonSocial:         c.RazonSocial,
+		TipoDocumento:       "6",
+		NumeroDocumento:     c.NumeroDocumento,
+		Estado:              c.Estado,
+		Condicion:           c.Condicion,
+		Direccion:           c.Direccion,
+		Ubigeo:              c.Ubigeo,
+		ViaTipo:             c.ViaTipo,
+		ViaNombre:           c.ViaNombre,
+		ZonaCodigo:          c.ZonaCodigo,
+		ZonaTipo:            c.ZonaTipo,
+		Numero:              c.Numero,
+		Interior:            c.Interior,
+		Lote:                c.Lote,
+		Dpto:                c.Dpto,
+		Manzana:             c.Manzana,
+		Kilometro:           c.Kilometro,
+		Distrito:            c.Distrito,
+		Provincia:           c.Provincia,
+		Departamento:        c.Departamento,
+		EsBuenContribuyente: c.EsBuenContribuyente,
+		EsAgenteRetencion:   c.EsAgenteRetencion,
+		LocalesAnexos:       c.LocalesAnexos,
+	}
 }
 
 // CompanyAdvance

@@ -72,3 +72,45 @@ func Pro5RucHandler(c *fiber.Ctx) error {
 	})
 
 }
+
+func GetCompanyApisV1Handler(c *fiber.Ctx) error {
+	var ruc string = c.Query("numero")
+	var dni string = c.Query("dni")
+	if ruc == "" {
+		ruc1, err1 := CreateRUCFromDNI(dni)
+		if err1 != nil {
+			ruc = ruc1
+		} else {
+			return c.Status(422).JSON(fiber.Map{"message": "DNI no valido"})
+		}
+	}
+	if err := IsValidRuc(ruc); err != nil {
+		return c.Status(422).JSON(fiber.Map{"message": "ruc no valido"})
+	}
+	company, err := GetCompanyApisV1Service(ruc)
+	if err != nil {
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"message": "not found"})
+	}
+	return c.Status(fiber.StatusOK).JSON(company)
+}
+
+func GetCompanyApisV2Handler(c *fiber.Ctx) error {
+	var ruc string = c.Query("numero")
+	var dni string = c.Query("dni")
+	if ruc == "" {
+		ruc1, err1 := CreateRUCFromDNI(dni)
+		if err1 != nil {
+			ruc = ruc1
+		} else {
+			return c.Status(422).JSON(fiber.Map{"message": "DNI no valido"})
+		}
+	}
+	if err := IsValidRuc(ruc); err != nil {
+		return c.Status(422).JSON(fiber.Map{"message": "ruc no valido"})
+	}
+	company, err := GetCompanyApisV2Service(ruc)
+	if err != nil {
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"message": "not found"})
+	}
+	return c.Status(fiber.StatusOK).JSON(company)
+}
