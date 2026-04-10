@@ -100,29 +100,3 @@ func GetCompanyApisV1Service(ruc string) (CompanyApisV1, error) {
 	SetToCacheRepostory(key, data.Data, time.Hour*24)
 	return c.ToApisV1(), nil
 }
-
-func GetCompanyApisV2Service(ruc string) (CompanyApisV2, error) {
-	key := getCompanyKey(ruc, "1")
-	var cached string
-	err := GetFromCacheRepository(key, &cached)
-	c := Company{
-		NumeroDocumento: ruc,
-	}
-	if err == nil {
-		c.Extender(cached)
-		return c.ToApisV2(), err
-	}
-
-	data, err1 := GetCompanyRepository(ruc)
-	if err1 != nil {
-		return CompanyApisV2{}, err1
-	}
-	c.Extender(data.Data)
-	c.EsAgenteRetencion = data.EsAgenteRetencion
-	c.EsBuenContribuyente = data.EsBuenContribuyente
-	for _, local := range data.Locales {
-		c.LocalesAnexos = append(c.LocalesAnexos, GetLocalAnexoAddress(local))
-	}
-	SetToCacheRepostory(key, data.Data, time.Hour*24)
-	return c.ToApisV2(), nil
-}

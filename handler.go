@@ -108,9 +108,9 @@ func GetCompanyApisV2Handler(c *fiber.Ctx) error {
 	if err := IsValidRuc(ruc); err != nil {
 		return c.Status(422).JSON(fiber.Map{"message": "ruc no valido"})
 	}
-	company, err := GetCompanyApisV2Service(ruc)
+	company, err := GetCompanyService(ruc)
 	if err != nil {
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"message": "not found"})
 	}
-	return c.Status(fiber.StatusOK).JSON(company)
+	return c.Status(fiber.StatusOK).JSON(company.ToApisV2())
 }
