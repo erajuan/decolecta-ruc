@@ -23,7 +23,6 @@ WORKDIR /app/
 
 COPY --from=builder /builder/app .
 COPY ubigeos.json .
-COPY scripts .
 
 RUN chown -R appuser:appgroup /app && chmod 644 ubigeos.json
 
