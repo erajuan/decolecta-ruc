@@ -19,10 +19,18 @@ var CTX = context.Background()
 
 var redisClient *redis.Client
 
-var pgsqlClient *pgxpool.Pool
+var pgsqlClient companyDB
 
 func main() {
 	Init()
+	app := NewApp()
+	if err := app.Listen(":3000"); err != nil {
+		log.Fatalf("Failed to start server: %v", err)
+	}
+}
+
+// NewApp builds the HTTP application without connecting to external services.
+func NewApp() *fiber.App {
 	app := fiber.New(fiber.Config{
 		ServerHeader:  "api.decolecta.com",
 		CaseSensitive: true,
@@ -39,9 +47,8 @@ func main() {
 	// Compatible with apis
 	app.Get("/apisV1/ruc", GetCompanyApisV1Handler)
 	app.Get("/apisV2/ruc", GetCompanyApisV2Handler)
-	if err := app.Listen(":3000"); err != nil {
-		log.Fatalf("Failed to start server: %v", err)
-	}
+	app.Get("/apisV2/ruc/full", GetCompanyFullApisV2Handler)
+	return app
 }
 
 func Init() {

@@ -1,12 +1,21 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"log"
 	"time"
+
+	"github.com/jackc/pgx/v5"
 )
+
+// companyDB is the query interface implemented by pgxpool.Pool.
+type companyDB interface {
+	QueryRow(context.Context, string, ...interface{}) pgx.Row
+	Query(context.Context, string, ...interface{}) (pgx.Rows, error)
+}
 
 func GetCompanyRepository(ruc string) (CompanyDTO, error) {
 	db := pgsqlClient

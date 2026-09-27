@@ -114,3 +114,15 @@ func GetCompanyApisV2Handler(c *fiber.Ctx) error {
 	}
 	return c.Status(fiber.StatusOK).JSON(company.ToApisV2())
 }
+
+func GetCompanyFullApisV2Handler(c *fiber.Ctx) error {
+	var ruc string = c.Query("numero")
+	if err := IsValidRuc(ruc); err != nil {
+		return c.Status(422).JSON(fiber.Map{"message": "ruc no valido"})
+	}
+	company, err := GetCompanyAdvanceService(ruc)
+	if err != nil {
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"message": "not found"})
+	}
+	return c.Status(fiber.StatusOK).JSON(company.ToApisV2())
+}

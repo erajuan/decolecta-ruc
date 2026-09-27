@@ -169,6 +169,18 @@ type CompanyAdvance struct {
 	ComercioExterior   string `json:"comercio_exterior"`
 }
 
+func (c CompanyAdvance) ToApisV2() CompanyAdvanceApisV2 {
+	return CompanyAdvanceApisV2{
+		CompanyApisV2:      c.Company.ToApisV2(),
+		Tipo:               c.Tipo,
+		ActividadEconomica: c.ActividadEconomica,
+		NumeroTrabajadores: c.NumeroTrabajadores,
+		TipoFacturacion:    c.TipoFacturacion,
+		TipoContabilidad:   c.TipoContabilidad,
+		ComercioExterior:   c.ComercioExterior,
+	}
+}
+
 type CompanyDTO struct {
 	Data                string
 	Extras              []SunatExtrasDTO
